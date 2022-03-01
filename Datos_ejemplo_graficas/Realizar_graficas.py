@@ -27,9 +27,9 @@ def cajas(datos=list(), xticks=list(), title='', label=tuple()):
     y = list()
     x = list()
     for i, j in zip(datos, xticks):#range(datos.__len__())
-        y.append(np.mean(i))
+        y.append(np.median(i))
         x.append(float(j))
-    ax.boxplot(datos, positions=x)
+    resultados = ax.boxplot(datos, positions=x)
     ax.set_xticks(x)
     ax.set_xticklabels(x)
     ax.plot(x, y)
@@ -52,15 +52,22 @@ if __name__ == '__main__':
     Entre_model = list()
     time_model = list()
     #print(Porcen)
+    Score_val = list()
+    Time_val = list()
 
     for i in Porcen:
-        df = pd.read_csv('Modelos/Modelo1/scores_para_' + i + '_porciento.csv', index_col=0)
-        df0 = pd.read_csv('Modelos/Modelo1/tiempos_para_' + i + '_porciento.csv', index_col=0)
+        df = pd.read_csv('Modelos/modelo1/scores_para_' + i + '_porciento.csv', index_col=0)
+        df0 = pd.read_csv('Modelos/modelo1/tiempos_para_' + i + '_porciento.csv', index_col=0)
+        df1 = pd.read_csv('Resultados/modelo1/Datos_validacion_' + i + '_para' + str(df.shape[0]) + '_modelos' 
+        + '.csv', index_col=0)
         Entre_model.append((df['Validaciones']*100).to_list())
         time_model.append((df0['Tiempos']/60).to_list())
+        Score_val.append((df1['Score']*100).to_list())
+        Time_val.append((df1['Tiempo']/60).to_list())
     
     #print(Entre_model)
     #print(time_model)
 
-    cajas(Entre_model, xticks=Porcen, title="Score de entrenamiento", label=('Porcentaje Base de Datos Entrenamiento',
-     'Score'))
+    cajas(Score_val, xticks=Porcen, title="Score de entrenamiento", 
+        label=('Porcentaje Base de Datos Entrenamiento',
+        'Score'))
