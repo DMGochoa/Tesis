@@ -1,0 +1,8 @@
+/venv/
+/*.csv
+/Datos_ejemplo_graficas/Modelos/modelo1/*.pkl
+/Datos_ejemplo_graficas/Modelos/modelo2/*.pkl
+/Datos_ejemplo_graficas/Resultados/modelo1/*.pkl
+/Datos_ejemplo_graficas/Resultados/modelo2/*.pkl
+/*svg
+/Graficas/*.svg
