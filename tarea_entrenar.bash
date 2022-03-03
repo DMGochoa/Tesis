@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+
+
+
+
 # Crear el venv de python3.10
 if [ -d venv/ ]
 then

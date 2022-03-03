@@ -9,7 +9,6 @@ Ingeniería Eléctrica
 01/03/2022
 """
 
-from turtle import position
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -17,30 +16,30 @@ import matplotlib.pyplot as plt
 
 sns.set()
 
-def cajas(datos=list(), xticks=list(), title='', label=tuple()):
+def cajas(datos=list(), xticks=list(), title='', label=tuple(), figax=tuple()):
     """
         Función para hacer la gráfica de cajas de cada porcentaje de entrenamiento.
     """
-    fig = plt.figure(figsize=(10, 5))
-    ax = fig.add_axes([0.1, 0.1, 0.85, 0.85])
+    figax[0]
+    figax[1]
+    #fig = plt.figure(figsize=(10, 5))
+    #ax = fig.add_axes([0.1, 0.1, 0.85, 0.85])
 
     y = list()
     x = list()
     for i, j in zip(datos, xticks):#range(datos.__len__())
-        y.append(np.median(i))
+        y.append(np.mean(i))
         x.append(float(j))
-    resultados = ax.boxplot(datos, positions=x)
-    ax.set_xticks(x)
-    ax.set_xticklabels(x)
-    ax.plot(x, y)
-    plt.title(title, fontsize=18, fontweight="bold")
+    resultados = figax[1].boxplot(datos, positions=x)
+    figax[1].set_xticks(x)
+    figax[1].set_xticklabels(x)
+    figax[1].plot(x, y)
+    figax[1].set_title(title, fontsize=18, fontweight="bold")
     try:
-        plt.xlabel(label[0])
-        plt.ylabel(label[1])
+        figax[1].set_xlabel(label[0])
+        figax[1].set_ylabel(label[1])
     except:
         pass
-    plt.show()
-
 
 if __name__ == '__main__':
     # Se agregan los caminos en donde se guardan los porcentajes que se utilizaron.
@@ -68,6 +67,27 @@ if __name__ == '__main__':
     #print(Entre_model)
     #print(time_model)
 
-    cajas(Score_val, xticks=Porcen, title="Score de entrenamiento", 
+    fig, axes = plt.subplots(1, 2, figsize=(14, 16))
+
+    cajas(Score_val, xticks=Porcen, title="Score de Validación", 
         label=('Porcentaje Base de Datos Entrenamiento',
-        'Score'))
+        'Score'), figax=(fig, axes[1]))
+
+    cajas(Entre_model, xticks=Porcen, title="Score de Entrenamiento", 
+        label=('Porcentaje Base de Datos Entrenamiento',
+        'Score'), figax=(fig, axes[0]))
+    axes[0].set_ylim([78, 80])
+    axes[1].set_ylim([65, 80])
+    
+
+    fig0, axes0 = plt.subplots(1, 2, figsize=(14, 16))
+    
+    cajas(time_model, xticks=Porcen, title="Tiempo de Entrenamiento", 
+        label=('Porcentaje Base de Datos Entrenamiento',
+        'Tiempo [min]'), figax=(fig0, axes0[0]))
+
+    cajas(Time_val, xticks=Porcen, title="Tiempo de Validación", 
+        label=('Porcentaje Base de Datos Entrenamiento',
+        'Tiempo [min]'), figax=(fig0, axes0[1]))
+
+    plt.show()

@@ -92,6 +92,8 @@ def scalamiento(base):
 
     # Eliminar en donde no hay información de todas las columnas
     base = base.loc[~(base[columnas[3]].isnull() & base[columnas[7]].isnull() & base[columnas[10]].isnull())]
+    base = base.drop_duplicates()
+    print(base.shape[0])
 
     # En los casos donde no hay voltaje pero si hay corriente se clasifica como sospechoso.
     base.loc[base[columnas[10]] == 0, 'Etiquetas'] = 1

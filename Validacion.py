@@ -199,7 +199,7 @@ if __name__ == '__main__':
             'Modelos/modelo' + str(quemodelo) + '/tiempos_para_' + str(porcen) + '_porciento.csv')
 
         canti_modelos = promedio_modelos.shape[0]
-        iteraciones = 2  #
+        iteraciones = 30  #
 
         for i in range(canti_modelos):
             instanteInicio = time.time()
