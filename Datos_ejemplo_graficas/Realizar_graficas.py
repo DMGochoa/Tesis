@@ -41,6 +41,27 @@ def cajas(datos=list(), xticks=list(), title='', label=tuple(), figax=tuple()):
     except:
         pass
 
+def sctter_std(datos, xticks, label=tuple(), figax=tuple(), title=''):
+    x, y, std_y = list(), list(), list()
+    for i, j in zip(datos, xticks):#range(datos.__len__())
+        xj = float(j)
+        y.append(np.mean(i))
+        x.append(xj)
+        std_y.append(np.std(i))
+        figax[1].scatter([xj]*i.__len__(), i)
+    figax[1].plot(x, y)
+    for nstd, color in zip(range(1,4), ["#7d2181", "#4c2882", "#333c87"]):
+        figax[1].fill_between(x, np.array(y) + np.array(std_y) * nstd, np.array(y) - np.array(std_y) * nstd, 
+        alpha=0.2, color=color)
+    figax[1].set_title(title, fontsize=18, fontweight="bold")
+    figax[1].set_xticks(x)
+    figax[1].set_xticklabels(x)
+    try:
+        figax[1].set_xlabel(label[0])
+        figax[1].set_ylabel(label[1])
+    except:
+        pass
+
 if __name__ == '__main__':
     # Se agregan los caminos en donde se guardan los porcentajes que se utilizaron.
     path_core1 = 'primercore.txt'
@@ -84,10 +105,26 @@ if __name__ == '__main__':
     
     cajas(time_model, xticks=Porcen, title="Tiempo de Entrenamiento", 
         label=('Porcentaje Base de Datos Entrenamiento',
-        'Tiempo [min]'), figax=(fig0, axes0[0]))
+        'Tiempo [min]'), figax=(fig0, axes0[1]))
 
     cajas(Time_val, xticks=Porcen, title="Tiempo de Validación", 
         label=('Porcentaje Base de Datos Entrenamiento',
-        'Tiempo [min]'), figax=(fig0, axes0[1]))
+        'Tiempo [min]'), figax=(fig0, axes0[0]))
+
+    fig1, axes1 = plt.subplots(1, 2, figsize=(14,16))
+
+    sctter_std(datos=time_model, xticks=Porcen, label=('Porcentaje Base de Datos Entrenamiento',
+        'Tiempo [min]'), figax=(fig1, axes1[1]), title="Tiempo de Entrenamiento")
+    sctter_std(datos=Time_val, xticks=Porcen, label=('Porcentaje Base de Datos Entrenamiento',
+        'Tiempo [min]'), figax=(fig1, axes1[0]), title="Tiempo de Validación")
+    
+    fig2, axes2 = plt.subplots(1, 2, figsize=(14,16))
+
+    sctter_std(datos=Score_val, xticks=Porcen, label=('Porcentaje Base de Datos Entrenamiento',
+        'Score'), figax=(fig2, axes2[1]), title="Score de Validación")
+    sctter_std(datos=Entre_model, xticks=Porcen, label=('Porcentaje Base de Datos Entrenamiento',
+        'Score'), figax=(fig2, axes2[0]), title="Score de Entrenamiento")
+    axes2[0].set_ylim([78, 80])
+    axes2[1].set_ylim([65, 80])
 
     plt.show()
