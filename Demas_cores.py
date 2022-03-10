@@ -15,8 +15,8 @@ if porcen_cores > 1:
 # Se calcula el nĂşmero de cores que se van a usar
 cores_para_usar = int(porcen_cores * cores)
 
-inicio = 5
-fin = 35
+inicio = 2.5
+fin = 5
 h = (fin - inicio) / cores_para_usar
 
 # Ahora se tiene los porcentajes que se van a usar para el resto de cores
