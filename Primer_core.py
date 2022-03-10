@@ -3,6 +3,7 @@ import sys
 listado=str()
 valor=0.1
 delta=0.1#0.9
+parada=0.5
 
 # Se crea un string con los datos desde 0.1 a 3.0
 while True:
@@ -13,7 +14,7 @@ while True:
 
     valor=valor+delta
 
-    if valor>=3.0:
+    if valor>=parada:
         break
 
 print(listado)

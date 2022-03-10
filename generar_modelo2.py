@@ -261,7 +261,7 @@ def main(Ktrain=0.0005, Ktest=0.005, iteraciones=150, base=pd.DataFrame()):
         # y_train = Xyrandom[iter][3]
         inicio = time.time()
 
-        modelo, resultado = entrenar_modelo(X=X_train, y=y_train, X_test=X_test, y_test=y_test, gam=0.1)
+        modelo, resultado = entrenar_modelo(X=X_train, y=y_train, X_test=X_test, y_test=y_test, gam=0.01)
         fin = time.time()
 
         modelos.append(modelo)

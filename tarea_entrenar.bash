@@ -6,15 +6,15 @@
 
 
 # Crear el venv de python3.10
-if [ -d venv/ ]
+if [ -d myvenv/ ]
 then
   echo "Ya hay un venv creado"
 else
-  python3 -m venv venv
+  sudo python3 -m venv myvenv
   echo "Se ha creado el venv"
 fi
 
-source venv/bin/activate
+source myvenv/bin/activate
 
 pip install -r requirements.txt
 
